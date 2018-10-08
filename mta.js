@@ -9,9 +9,11 @@ function drawTime(data, status, xhr) {
 
 function drawTimeError(xhr, status, error) {
     var id = xhr.id;
-    $(`#times tr:eq(${id})`).html(`<td colspan=2 class="station">unknown</td>`);
-    $(`#times tr:eq(${id+1})`).html(`<td>${status}</td><td></td>`);
-    $(`#times tr:eq(${id+2})`).html(`<td>${error}</td><td></td>`);
+    if ($(`#times tr:eq(${id})`).html() == "") {
+        $(`#times tr:eq(${id})`).html(`<td colspan=2 class="station">unknown</td>`);
+        $(`#times tr:eq(${id+1})`).html(`<td>${status}</td><td></td>`);
+        $(`#times tr:eq(${id+2})`).html(`<td>${error}</td><td></td>`);
+    }
 }
 
 var nextid = 0;
@@ -51,7 +53,9 @@ function drawStatus(data, st, xhr) {
 }
 
 function drawStatusError(xhr, status, error) {
-    $("#status").html(`Loading status: ${status} (${error})`);
+    if ($("#status").html() == "") {
+        $("#status").html(`Loading status: ${status} (${error})`);
+    }
 }
 
 function status(url) {
