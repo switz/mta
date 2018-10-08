@@ -9,8 +9,10 @@ function drawTimes(data, status, xhr) {
 
 var nextid = 0;
 
-function request(url) {
-    $("#times").append("<tr></tr><tr></tr><tr></tr>")
+function request(url, first) {
+    if (first) {
+        $("#times").append("<tr></tr><tr></tr><tr></tr>");
+    }
     $.ajax({
         dataType: "json",
         url: url,
@@ -20,6 +22,7 @@ function request(url) {
 }
 
 function drawStatus(data, status, xhr) {
+    $("#status").html("");
     var routes = data.routeDetails.filter(route => route.mode == "subway");
     routes = routes.sort((a, b) => a.route[0] < b.route[0] ? -1 : a.route[0] == b.route[0] ? 0 : 1);
     for (var route of routes) {
@@ -30,7 +33,7 @@ function drawStatus(data, status, xhr) {
             var last = ""
             for (var status of route.statusDetails) {
                 if (status.statusSummary != last) {
-                    $("#status").append(`${status.statusSummary} `)
+                    $("#status").append(`${status.statusSummary} `);
                     last = status.statusSummary;
                 }
             }
@@ -46,13 +49,16 @@ function status(url) {
     });
 }
 
-function load() {
-    request("https://mtasubwaytime.info/getTime/2/231");
-    request("https://mtasubwaytime.info/getTime/2/137");
-    request("https://mtasubwaytime.info/getTime/2/134");
-    request("https://mtasubwaytime.info/getTime/C/A33");
-    request("https://mtasubwaytime.info/getTime/C/A34");
-    request("https://mtasubwaytime.info/getTime/C/A40");
+function load(first) {
+    nextid = 0;
+    request("https://mtasubwaytime.info/getTime/2/231", first);
+    request("https://mtasubwaytime.info/getTime/2/137", first);
+    request("https://mtasubwaytime.info/getTime/2/134", first);
+    request("https://mtasubwaytime.info/getTime/C/A33", first);
+    request("https://mtasubwaytime.info/getTime/C/A34", first);
+    request("https://mtasubwaytime.info/getTime/C/A40", first);
 
     status("https://collector-otp-prod.camsys-apps.com/realtime/serviceStatus?apikey=qeqy84JE7hUKfaI0Lxm2Ttcm6ZA0bYrP")
+
+    setTimeout(() => load(false), 10000);
 }
