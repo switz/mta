@@ -16,7 +16,34 @@ function request(url) {
         url: url,
         success: drawTimes,
     })["id"] = nextid * 3;
-nextid++;
+    nextid++;
+}
+
+function drawStatus(data, status, xhr) {
+    var routes = data.routeDetails.filter(route => route.mode == "subway");
+    routes = routes.sort((a, b) => a.route[0] < b.route[0] ? -1 : a.route[0] == b.route[0] ? 0 : 1);
+    for (var route of routes) {
+        var name = route.route;
+        var color = route.color;
+        if (route.statusDetails !== undefined) {
+            $("#status").append(`<span style="color: #${color};">${name}</span>&nbsp;`);
+            var last = ""
+            for (var status of route.statusDetails) {
+                if (status.statusSummary != last) {
+                    $("#status").append(`${status.statusSummary} `)
+                    last = status.statusSummary;
+                }
+            }
+        }
+    }
+}
+
+function status(url) {
+    $.ajax({
+        dataType: "json",
+        url: url,
+        success: drawStatus,
+    });
 }
 
 function load() {
@@ -26,4 +53,6 @@ function load() {
     request("https://mtasubwaytime.info/getTime/C/A33");
     request("https://mtasubwaytime.info/getTime/C/A34");
     request("https://mtasubwaytime.info/getTime/C/A40");
+
+    status("https://collector-otp-prod.camsys-apps.com/realtime/serviceStatus?apikey=qeqy84JE7hUKfaI0Lxm2Ttcm6ZA0bYrP")
 }
