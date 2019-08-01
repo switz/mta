@@ -110,12 +110,9 @@ function status(url) {
 
 function load(first) {
     nextid = 0;
-    request("https://mtasubwaytime.info/getTime/2/231", first);
-    request("https://mtasubwaytime.info/getTime/2/137", first);
-    request("https://mtasubwaytime.info/getTime/2/134", first);
-    request("https://mtasubwaytime.info/getTime/C/A33", first);
-    request("https://mtasubwaytime.info/getTime/C/A34", first);
-    request("https://mtasubwaytime.info/getTime/C/A40", first);
+    request("https://mtasubwaytime.info/getTime/A/A46", first);
+    request("https://mtasubwaytime.info/getTime/A/A45", first);
+    request("https://mtasubwaytime.info/getTime/G/G33", first);
 
     status("https://collector-otp-prod.camsys-apps.com/realtime/serviceStatus?apikey=qeqy84JE7hUKfaI0Lxm2Ttcm6ZA0bYrP");
 
