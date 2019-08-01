@@ -3,7 +3,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Arrival Times</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="mta.js"></script>
     <style>
       body { font-family: "Helvetica Neue"; }
       .route { color: grey; font-size: 105%; }
@@ -31,6 +30,7 @@
   <body>
     <table id="times"></table>
     <p id="status"></p>
+    <script src="./mta.js"></script>
     <script>$(document).ready(() => load(true));</script>
   </body>
   </html>
